@@ -4,6 +4,8 @@
     <!-- for SearchView -->
     <declare-styleable name="SearchView">
         <attr name="sv_backgroundResource" format="reference" />
+        <attr name="sv_backButtonIcon" format="reference" />
+        <attr name="sv_searchButtonIcon" format="reference" />
         <attr name="sv_hint" format="string" />
         <attr name="sv_hintColor" format="integer" />
         <attr name="sv_showBackButton" format="boolean" />

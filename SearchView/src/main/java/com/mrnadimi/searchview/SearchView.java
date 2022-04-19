@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -73,6 +74,16 @@ public class SearchView extends RelativeLayout {
         setBackgroundResource(background);
         //end
 
+        //background
+        int backButtonResource = a.getResourceId(R.styleable.SearchView_sv_backButtonIcon , R.drawable.ic_arrow_back_serach_view_24dp);
+        back.setImageResource(backButtonResource);
+        //end
+
+        //background
+        int searchButtonResource = a.getResourceId(R.styleable.SearchView_sv_searchButtonIcon , R.drawable.ic_search_search_view_24dp);
+        search.setImageResource(searchButtonResource);
+        //end
+
 
         /*
          * Edittext hint
@@ -126,7 +137,6 @@ public class SearchView extends RelativeLayout {
 
     private void createBackBtn(Context context){
         this.back = new ImageView(context);
-        this.back.setImageResource(R.drawable.ic_arrow_back_serach_view_24dp);
         LayoutParams params = new LayoutParams(getDimenInPixel(R.dimen.size_35dp)
                 ,getDimenInPixel(R.dimen.size_35dp));
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -187,7 +197,6 @@ public class SearchView extends RelativeLayout {
 
     private void createSearchBtn(Context context) {
         this.search = new ImageView(context);
-        this.search.setImageResource(R.drawable.ic_search_search_view_24dp);
         LayoutParams params = new LayoutParams(getDimenInPixel(R.dimen.size_35dp)
                 ,getDimenInPixel(R.dimen.size_35dp));
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
@@ -266,6 +275,18 @@ public class SearchView extends RelativeLayout {
         return this.editText;
     }
 
+    public ImageView getBackButton(){
+        return back;
+    }
+
+    public void setHint(String hint){
+        this.editText.setHint(hint);
+    }
+
+    public void setHint(@StringRes int hint){
+        this.editText.setHint(hint);
+    }
+
     public void notifyUpdate(){
         if (this.searchListener != null) {
             this.searchListener.notifyUpdate();
@@ -301,12 +322,6 @@ public class SearchView extends RelativeLayout {
         this.editText.addTextChangedListener(searchListener.getTextWatcher(this));
     }
 
-    public void setHint(String hint){
-        this.editText.setHint(hint);
-    }
 
-    public void setHint(@StringRes int hint){
-        this.editText.setHint(hint);
-    }
 
 }
