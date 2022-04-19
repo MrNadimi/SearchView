@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="transparent">@android:color/transparent</color>
+    <color name="sv_transparent">@android:color/transparent</color>
+    <color name="sv_tint">#000</color>
+    <color name="sv_stroke">#000</color>
+    <color name="sv_background_color">#FFFFFF</color>
 </resources>

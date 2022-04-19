@@ -161,7 +161,7 @@ public class SearchView extends RelativeLayout {
         params.addRule(RelativeLayout.CENTER_VERTICAL);
         params.addRule(RelativeLayout.END_OF, this.back.getId() );
         params.addRule(RelativeLayout.START_OF, this.endLayout.getId() );
-        this.editText.setBackgroundResource(R.color.transparent);
+        this.editText.setBackgroundResource(R.color.sv_transparent);
         this.editText.setGravity(Gravity.START);
         this.editText.setLayoutParams(params);
         this.editText.setId(View.generateViewId());
