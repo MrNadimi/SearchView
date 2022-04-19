@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- for SearchView -->
+    <declare-styleable name="SearchView">
+        <attr name="sv_backgroundResource" format="reference" />
+        <attr name="sv_hint" format="string" />
+        <attr name="sv_hintColor" format="integer" />
+        <attr name="sv_showBackButton" format="boolean" />
+        <attr name="sv_showSearchIcon" format="boolean" />
+        <attr name="sv_showProgressbar" format="boolean" />
+    </declare-styleable>
+
+</resources>
