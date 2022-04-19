@@ -10,7 +10,6 @@
         <attr name="sv_hintColor" format="integer" />
         <attr name="sv_showBackButton" format="boolean" />
         <attr name="sv_showSearchIcon" format="boolean" />
-        <attr name="sv_showProgressbar" format="boolean" />
     </declare-styleable>
 
 </resources>

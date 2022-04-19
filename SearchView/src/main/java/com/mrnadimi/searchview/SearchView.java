@@ -9,7 +9,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -34,8 +33,6 @@ public class SearchView extends RelativeLayout {
 
     private EditText editText;
     private ImageView search, back;
-    private ProgressBar progressBar;
-    private RelativeLayout endLayout;
     private SearchViewListener<?> searchListener;
 
     public SearchView(Context context) {
@@ -75,7 +72,7 @@ public class SearchView extends RelativeLayout {
         //end
 
         //background
-        int backButtonResource = a.getResourceId(R.styleable.SearchView_sv_backButtonIcon , R.drawable.ic_arrow_back_serach_view_24dp);
+        int backButtonResource = a.getResourceId(R.styleable.SearchView_sv_backButtonIcon , R.drawable.ic_arrow_back_search_view_24dp);
         back.setImageResource(backButtonResource);
         //end
 
@@ -111,15 +108,6 @@ public class SearchView extends RelativeLayout {
         }
         //end
 
-        /*
-         * Show progressbar icon
-         */
-        boolean showProgressbar = a.getBoolean(R.styleable.SearchView_sv_showProgressbar, false);
-        if (!showProgressbar){
-            this.progressBar.setVisibility(GONE);
-        }
-        //end
-
 
 
         a.recycle();
@@ -128,51 +116,46 @@ public class SearchView extends RelativeLayout {
     private void initDefault(Context context){
         setGravity(CENTER_VERTICAL);
         createBackBtn(context);
-        createEndLayout(context);
-        createEditText(context);
         createSearchBtn(context );
-        createProgressBar(context);
+        createEditText(context);
+
+    }
+
+    //Fix height
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        heightMeasureSpec = MeasureSpec.makeMeasureSpec(getToolBarHeightInPixel(), MeasureSpec.AT_MOST);
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
 
     private void createBackBtn(Context context){
         this.back = new ImageView(context);
-        LayoutParams params = new LayoutParams(getDimenInPixel(R.dimen.size_35dp)
-                ,getDimenInPixel(R.dimen.size_35dp));
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                , getToolBarHeightInPixel());
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        int backPadding = getDimenInPixel(R.dimen.size_5dp);
+        int backPadding = getDimenInPixel(R.dimen.size_10dp);
         this.back.setPadding( backPadding,backPadding,backPadding,backPadding );
-        params.setMarginStart(getDimenInPixel(R.dimen.size_15dp));
+        params.setMarginStart(getDimenInPixel(R.dimen.size_5dp));
         this.back.setLayoutParams(params);
         this.back.setId(View.generateViewId());
         this.back.setBackgroundResource(getSelectableBackground());
         addView(this.back);
     }
 
-    private void createEndLayout(Context context) {
-        this.endLayout = new RelativeLayout(context);
-        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
-                ,getToolBarHeightInPixel());
-        params.setMarginEnd(getDimenInPixel(R.dimen.size_15dp));
-        params.addRule(RelativeLayout.ALIGN_PARENT_END, 1 );
-        this.endLayout.setGravity(CENTER_VERTICAL);
-        this.endLayout.setLayoutParams(params);
-        this.endLayout.setId(View.generateViewId());
-        addView(this.endLayout);
-    }
 
 
 
     private void createEditText(Context context){
         this.editText = new EditText(context);
-        LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT
-                , LayoutParams.WRAP_CONTENT);
+        LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT
+                , getToolBarHeightInPixel() );
         params.setMarginStart(getDimenInPixel(R.dimen.size_10dp));
         params.addRule(RelativeLayout.CENTER_VERTICAL);
         params.addRule(RelativeLayout.END_OF, this.back.getId() );
-        params.addRule(RelativeLayout.START_OF, this.endLayout.getId() );
+        params.addRule(RelativeLayout.START_OF, this.search.getId() );
         this.editText.setBackgroundResource(R.color.sv_transparent);
-        this.editText.setGravity(Gravity.START);
+        this.editText.setGravity(Gravity.START|Gravity.CENTER_VERTICAL);
         this.editText.setLayoutParams(params);
         this.editText.setId(View.generateViewId());
         /*
@@ -197,26 +180,19 @@ public class SearchView extends RelativeLayout {
 
     private void createSearchBtn(Context context) {
         this.search = new ImageView(context);
-        LayoutParams params = new LayoutParams(getDimenInPixel(R.dimen.size_35dp)
-                ,getDimenInPixel(R.dimen.size_35dp));
+        LayoutParams params = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT
+                ,getToolBarHeightInPixel());
         params.addRule(RelativeLayout.CENTER_VERTICAL, RelativeLayout.TRUE);
-        int searchPadding = getDimenInPixel(R.dimen.size_5dp);
+        params.setMarginEnd(getDimenInPixel(R.dimen.size_5dp));
+        params.addRule(RelativeLayout.ALIGN_PARENT_END, 1 );
+        int searchPadding = getDimenInPixel(R.dimen.size_10dp);
         this.search.setPadding( searchPadding,searchPadding,searchPadding,searchPadding );
         this.search.setLayoutParams(params);
         this.search.setId(View.generateViewId());
         this.search.setBackgroundResource(getSelectableBackground());
-        this.endLayout.addView(this.search);
+        addView(this.search);
     }
 
-    private void createProgressBar(Context context) {
-        this.progressBar = new ProgressBar(context);
-        LayoutParams params = new LayoutParams(getDimenInPixel(R.dimen.size_35dp)
-                ,R.dimen.size_35dp);
-        this.progressBar.setLayoutParams(params);
-        this.progressBar.setId(View.generateViewId());
-        params.addRule(RelativeLayout.END_OF, this.search.getId() );
-        this.endLayout.addView(this.progressBar);
-    }
 
     private int getDimenInPixel(@DimenRes int id){
         return (int) getResources().getDimension(id);
@@ -264,12 +240,6 @@ public class SearchView extends RelativeLayout {
         this.search.setVisibility(show ? VISIBLE : GONE);
     }
 
-    /*
-     * If there is not text icon then it will showing
-     */
-    public void showProgressBar(boolean show){
-        this.progressBar.setVisibility(show ? VISIBLE : GONE);
-    }
 
     public EditText getEditText(){
         return this.editText;
@@ -320,6 +290,11 @@ public class SearchView extends RelativeLayout {
         }
         this.searchListener = searchListener;
         this.editText.addTextChangedListener(searchListener.getTextWatcher(this));
+    }
+
+
+    public void clearText(){
+        editText.setText("");
     }
 
 

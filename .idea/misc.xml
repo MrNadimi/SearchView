@@ -6,6 +6,7 @@
         <entry key="SearchView/src/main/res/drawable/ic_arrow_back_serach_view_24dp.xml" value="0.2845" />
         <entry key="SearchView/src/main/res/drawable/ic_search_search_view_24dp.xml" value="0.2845" />
         <entry key="SearchView/src/main/res/drawable/style_searchview_background.xml" value="0.2845" />
+        <entry key="SearchView/src/main/res/layout/layout_search.xml" value="0.333786231884058" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.333786231884058" />
       </map>
     </option>
