@@ -292,6 +292,32 @@ public class SearchView extends RelativeLayout {
         this.editText.addTextChangedListener(searchListener.getTextWatcher(this));
     }
 
+    public SearchViewListener<?> getSearchListener() {
+        return searchListener;
+    }
+
+    public void startFocus(){
+        editText.performClick();
+        editText.requestFocus();
+    }
+
+    /**
+     * set text without callback
+     */
+    public void setForceText(String text){
+        if (this.searchListener != null){
+            this.editText.removeTextChangedListener(this.searchListener.getTextWatcher(this));
+            setText(text);
+            this.editText.addTextChangedListener(searchListener.getTextWatcher(this));
+        }else{
+            setText(text);
+        }
+    }
+
+    public void setText(CharSequence text){
+        editText.setText(text);
+        editText.setSelection(editText.getText().length());
+    }
 
     public void clearText(){
         editText.setText("");

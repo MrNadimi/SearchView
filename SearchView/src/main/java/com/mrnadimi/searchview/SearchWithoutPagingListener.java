@@ -5,6 +5,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +29,7 @@ public abstract class SearchWithoutPagingListener<T> extends SearchViewListener<
      * zakhire mikonim ta dar surate search mojadad haman kalame
      * zaman ra bekharim
      */
-    private Map<String, List<T>> lastCachedResults;
+    private final Map<String, List<T>> lastCachedResults;
     /*
      * search haye dar hale anjam  ra dar inja ghrara midahad ta dobare search nashavad va
      * montazer pasokh bemanad
@@ -74,6 +75,13 @@ public abstract class SearchWithoutPagingListener<T> extends SearchViewListener<
                             activeRequests.put(beforeText, false);
                         }
 
+                        if (query.isEmpty()) {
+                            if (canRevokeOnResult(searchView)) {
+                                onResult(query, new ArrayList<>());
+                            }
+                            return;
+                        }
+
                         activeRequests.put(query, true);
 
                         if (lastCachedResults.containsKey(query)) {
@@ -83,12 +91,8 @@ public abstract class SearchWithoutPagingListener<T> extends SearchViewListener<
                             return;
                         }
 
-                        if (query.isEmpty()) {
-                            if (canRevokeOnResult(searchView)) {
-                                onResult(query, null);
-                            }
-                            return;
-                        }
+
+
 
                         Boolean b = activeRequests.get(query);
                         if (b != null && !b) {
@@ -150,7 +154,7 @@ public abstract class SearchWithoutPagingListener<T> extends SearchViewListener<
                         t.start();
                     } else {
                         if (canRevokeOnResult(searchView)) {
-                            onResult("", null);
+                            onResult("", new ArrayList<>());
                         }
                     }
                 } catch (Exception ex) {
@@ -180,6 +184,7 @@ public abstract class SearchWithoutPagingListener<T> extends SearchViewListener<
     synchronized void notifyUpdate() {
 
     }
+
 
 
     void dispose() {
