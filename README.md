@@ -11,4 +11,4 @@ repositories {
 
 
 ```` 
-implementation 'com.github.MrNadimi:SearchView:1.0.0'
+implementation 'com.github.MrNadimi:SearchView:1.0.3'
